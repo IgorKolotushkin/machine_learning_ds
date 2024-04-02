@@ -1,0 +1,1 @@
+select round(avg(speed), 2) from pc

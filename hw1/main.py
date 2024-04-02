@@ -78,11 +78,28 @@ def create_printer_data():
     run_sql(f"INSERT INTO printer VALUES {', '.join(values)}")
 
 
+def add_duplicate():
+    conn = psycopg2.connect(
+        database='computer_company',
+        user='postgres',
+        password='postgres',
+        host='127.0.0.1',
+        port=5432
+    )
+    # conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM printer;")
+    for i in cur:
+        print(i)
+    conn.close()
+
+
 def main():
     # create_pc_data()
     # create_product_data()
     # create_laptop_data()
-    create_printer_data()
+    # create_printer_data()
+    add_duplicate()
 
 
 if __name__ == '__main__':
