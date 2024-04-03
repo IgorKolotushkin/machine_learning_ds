@@ -1,6 +1,7 @@
 import random
 
 import psycopg2
+from psycopg2._psycopg import Decimal
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 
@@ -86,11 +87,21 @@ def add_duplicate():
         host='127.0.0.1',
         port=5432
     )
-    # conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cur = conn.cursor()
-    cur.execute("SELECT * FROM printer;")
-    for i in cur:
-        print(i)
+    for dev in ['PC', 'printer', 'laptop']:
+        cur.execute(f"SELECT * FROM {dev};")
+
+        values = []
+        for code, model, data in zip(range(105, 210), range(1225, 1330), cur):
+            new = []
+            new.append(code)
+            new.append(model)
+            for n in data[3:]:
+                new.append(n)
+            values.append(tuple(new))
+            print(new)
+
+            run_sql(f"INSERT INTO {dev} VALUES {str(tuple(new))}")
     conn.close()
 
 
