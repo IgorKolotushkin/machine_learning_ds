@@ -1,7 +1,6 @@
 import random
 
 import psycopg2
-from psycopg2._psycopg import Decimal
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 
@@ -22,7 +21,7 @@ def run_sql(sql):
 def create_pc_data():
     run_sql(
         'CREATE TABLE PC (code INTEGER, model INTEGER, speed INTEGER, ram INTEGER, '
-        'hd NUMERIC(10,1), cd VARCHAR(50), price NUMERIC(10,4))'
+        'hd FLOAT, cd VARCHAR(50), price FLOAT)'
     )
 
     values = []
@@ -44,7 +43,7 @@ def create_product_data():
     values = []
     for code in range(1121, 1225):
         values.append(
-            f"(\'{random.choice(['A', 'B', 'C', 'D', 'E'])}\', {code}, \'{random.choice(['PC', 'Laptop', 'Printer'])}\')"
+            f"(\'{random.choice(['A', 'B', 'C', 'D', 'E', 'G', 'U', 'Q'])}\', {code}, \'{random.choice(['PC', 'Laptop', 'Printer'])}\')"
         )
     data = ', '.join(values) + '\n'
     run_sql(f"INSERT INTO product VALUES {data}")
@@ -53,7 +52,7 @@ def create_product_data():
 def create_laptop_data():
     run_sql(
         'CREATE TABLE laptop (code INTEGER, model INTEGER, speed INTEGER, ram INTEGER, '
-        'hd NUMERIC(10,1), screen INTEGER, price NUMERIC(10,4))')
+        'hd FLOAT, screen INTEGER, price FLOAT)')
 
     values = []
     for code, i in enumerate(range(1121, 1225), start=1):
@@ -68,7 +67,7 @@ def create_laptop_data():
 def create_printer_data():
     run_sql(
         'CREATE TABLE printer (code INTEGER, model INTEGER, color VARCHAR(2),'
-        'type VARCHAR(10), price NUMERIC(10,4))')
+        'type VARCHAR(10), price FLOAT)')
 
     values = []
     for code, i in enumerate(range(1121, 1225), start=1):
@@ -90,26 +89,20 @@ def add_duplicate():
     cur = conn.cursor()
     for dev in ['PC', 'printer', 'laptop']:
         cur.execute(f"SELECT * FROM {dev};")
-
-        values = []
-        for code, model, data in zip(range(105, 210), range(1225, 1330), cur):
-            new = []
-            new.append(code)
-            new.append(model)
-            for n in data[3:]:
+        for code, data in zip(range(105, 210), cur.fetchall()):
+            new = [code]
+            for n in data[1:]:
                 new.append(n)
-            values.append(tuple(new))
-            print(new)
-
-            run_sql(f"INSERT INTO {dev} VALUES {str(tuple(new))}")
+            cur.execute(f"INSERT INTO {dev} VALUES {(tuple(new))}")
+            conn.commit()
     conn.close()
 
 
 def main():
-    # create_pc_data()
-    # create_product_data()
-    # create_laptop_data()
-    # create_printer_data()
+    create_pc_data()
+    create_product_data()
+    create_laptop_data()
+    create_printer_data()
     add_duplicate()
 
 
