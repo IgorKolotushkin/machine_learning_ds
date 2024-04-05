@@ -1,5 +1,6 @@
-select maker from product
-where type = 'PC' and maker not in (
-select maker from product
-             where type = 'Laptop'
+SELECT maker FROM product
+WHERE type = 'PC' AND maker NOT IN (
+SELECT maker FROM product
+             WHERE type = 'Laptop'
              )
+GROUP BY maker

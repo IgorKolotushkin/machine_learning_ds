@@ -19,6 +19,10 @@ def run_sql(sql):
 
 
 def create_pc_data():
+    """
+    Создание и наполнение таблицы данными о PC
+    :return:
+    """
     run_sql(
         'CREATE TABLE PC (code INTEGER, model INTEGER, speed INTEGER, ram INTEGER, '
         'hd FLOAT, cd VARCHAR(50), price FLOAT)'
@@ -36,6 +40,10 @@ def create_pc_data():
 
 
 def create_product_data():
+    """
+    Создание и наполнение таблицы данными о product
+    :return:
+    """
     run_sql(
         'CREATE TABLE product (maker VARCHAR(10), model INTEGER, type VARCHAR(10))'
     )
@@ -50,6 +58,10 @@ def create_product_data():
 
 
 def create_laptop_data():
+    """
+    Создание и наполнение таблицы данными о laptop
+    :return:
+    """
     run_sql(
         'CREATE TABLE laptop (code INTEGER, model INTEGER, speed INTEGER, ram INTEGER, '
         'hd FLOAT, screen INTEGER, price FLOAT)')
@@ -65,6 +77,10 @@ def create_laptop_data():
 
 
 def create_printer_data():
+    """
+    Создание и наполнение таблицы данными о printer
+    :return:
+    """
     run_sql(
         'CREATE TABLE printer (code INTEGER, model INTEGER, color VARCHAR(2),'
         'type VARCHAR(10), price FLOAT)')
@@ -79,6 +95,10 @@ def create_printer_data():
 
 
 def add_duplicate():
+    """
+    Добавление дубликатов в таблицы
+    :return:
+    """
     conn = psycopg2.connect(
         database='computer_company',
         user='postgres',
