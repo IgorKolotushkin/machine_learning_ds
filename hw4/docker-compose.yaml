@@ -9,9 +9,9 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=module_6
+      - POSTGRES_DB=new_db
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - new_db_data:/var/lib/postgresql/data
 
 volumes:
-  db_data: {}
+  new_db_data: {}
