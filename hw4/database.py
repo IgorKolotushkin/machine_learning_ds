@@ -2,20 +2,6 @@ import pandas as pd
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-#
-# def run_sql(sql):
-#     conn = psycopg2.connect(
-#         database='new_db',
-#         user='postgres',
-#         password='postgres',
-#         host='127.0.0.1',
-#         port=5432
-#     )
-#     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-#     cur = conn.cursor()
-#     cur.scalars(sql)
-#     conn.close()
-
 
 conn = psycopg2.connect(
     database='new_db',
